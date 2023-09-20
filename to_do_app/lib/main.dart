@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/core/init_widget.dart';
+import 'package:to_do_app/core/theme/provider.dart';
+import 'package:to_do_app/core/theme/theme.dart';
+import 'package:to_do_app/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
+
+  // Запрет на смену ориентации экрана
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 }
 
 class MyApp extends StatelessWidget {
@@ -9,61 +21,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    return InitWidget(
+      child: Builder(builder: (context) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'TODO App',
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+          // Тема
+          theme: Themes.light,
+          darkTheme: Themes.dark,
+          themeMode: context.watch<ThemeProvider>().themeMode,
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+          home: const LoginPage(),
+        );
+      }),
     );
   }
 }
