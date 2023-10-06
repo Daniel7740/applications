@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:to_do_app/core/init_widget.dart';
 import 'package:to_do_app/core/theme/provider.dart';
 import 'package:to_do_app/core/theme/theme.dart';
-import 'package:to_do_app/pages/login_page.dart';
+import 'package:to_do_app/screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           darkTheme: Themes.dark,
           themeMode: context.watch<ThemeProvider>().themeMode,
 
-          home: const LoginPage(),
+          home: const HomeScreen(),
         );
       }),
     );
